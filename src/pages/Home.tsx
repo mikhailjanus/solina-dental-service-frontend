@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import axios from 'axios';
 import BookingModal from '../components/BookingModal';
-import { CircleDot, Shield, Clock, MapPin, Phone, Calendar, Star, ChevronRight, Award } from 'lucide-react';
+import { CircleDot, Shield, Clock, MapPin, Phone, Calendar, Star, ChevronRight, Award, ImageOff } from 'lucide-react';
 
 interface Service {
   id: number;
@@ -41,17 +41,6 @@ const Home = () => {
   const fetchClinics = async () => {
     const res = await axios.get('http://localhost:5000/api/clinics');
     setClinics(res.data);
-  };
-
-  const serviceIcons: Record<string, ReactElement> = {
-    'General Checkup': <CircleDot className="w-8 h-8 text-blue-600" />,
-    'Teeth Cleaning': <Shield className="w-8 h-8 text-blue-600" />,
-    'Tooth Filling': <CircleDot className="w-8 h-8 text-blue-600" />,
-    'Root Canal Treatment': <CircleDot className="w-8 h-8 text-blue-600" />,
-    'Teeth Whitening': <Star className="w-8 h-8 text-blue-600" />,
-    'Dental Implants': <CircleDot className="w-8 h-8 text-blue-600" />,
-    'Orthodontics/Braces': <CircleDot className="w-8 h-8 text-blue-600" />,
-    'Dental Crown': <Award className="w-8 h-8 text-blue-600" />,
   };
 
   return (
@@ -130,36 +119,53 @@ const Home = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map(service => (
-              <div 
-                key={service.id} 
-                className="bg-white border border-gray-100 rounded-2xl p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
-              >
-                <div className="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 transition">
-                   <div className="group-hover:text-white">
-                     {serviceIcons[service.name] || <CircleDot className="w-8 h-8 text-blue-600" />}
-                   </div>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{service.name}</h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {services.map(service => (
+                  <div
+                    key={service.id}
+                    className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col"
+                  >
+                  {/* Service Image */}
+                  <div className="relative h-48 bg-gray-100">
+                    {service.image ? (
+                       <img 
+                         src={`http://localhost:5000/uploads/services/${service.image}`} 
+                         alt={service.name}
+                         className="w-full h-full object-contain bg-gray-50"
+                         onError={(e) => {
+                           (e.target as HTMLImageElement).style.display = 'none';
+                           (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+                         }}
+                       />
+                    ) : null}
+                    <div className={`${service.image ? 'hidden' : 'flex'} absolute inset-0 items-center justify-center bg-gray-200`}>
+                      <ImageOff className="w-12 h-12 text-gray-400" />
+                    </div>
+                  </div>
+                  
+                  <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{service.name}</h3>
                 <p className="text-gray-600 mb-4 text-sm leading-relaxed">{service.description}</p>
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-2xl font-bold text-blue-600">${service.price}</span>
-                  <span className="text-gray-500 flex items-center text-sm">
-                    <Clock className="w-4 h-4 mr-1" />
-                    {service.duration} min
-                  </span>
+                <div className="mt-auto">
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-2xl font-bold text-blue-600">₱{service.price}</span>
+                    <span className="text-gray-500 flex items-center text-sm">
+                      <Clock className="w-4 h-4 mr-1" />
+                      {service.duration} min
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => { setSelectedService(service); setShowBooking(true); }}
+                    className="w-full bg-gray-50 hover:bg-blue-600 hover:text-white text-gray-800 py-3 rounded-xl font-semibold transition flex items-center justify-center"
+                  >
+                    Book Now
+                    <ChevronRight className="w-4 h-4 ml-1" />
+                  </button>
                 </div>
-                <button
-                  onClick={() => { setSelectedService(service); setShowBooking(true); }}
-                  className="w-full bg-gray-50 hover:bg-blue-600 hover:text-white text-gray-800 py-3 rounded-xl font-semibold transition flex items-center justify-center"
-                >
-                  Book Now
-                  <ChevronRight className="w-4 h-4 ml-1" />
-                </button>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
         </div>
       </section>
 
