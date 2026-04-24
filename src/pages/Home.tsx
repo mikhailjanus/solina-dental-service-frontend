@@ -211,7 +211,7 @@ const Home = () => {
             <p className="text-blue-600 font-semibold mb-2 uppercase tracking-wider">Our Locations</p>
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Visit Our Clinics</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Two convenient locations with ample parking and easy access.
+              Convenient locations with simple parking and easy access.
             </p>
           </div>
 
