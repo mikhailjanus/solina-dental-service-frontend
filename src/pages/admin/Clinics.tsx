@@ -100,7 +100,10 @@ const AdminClinics = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Manage Clinics</h2>
+        <div>
+          <h2 className="text-2xl font-bold">Manage Clinics</h2>
+          <span className="text-sm text-gray-500">Total: {clinics.length} clinics</span>
+        </div>
         <button onClick={() => {
           setEditingClinic(null);
           setFormData({

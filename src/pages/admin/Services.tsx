@@ -107,7 +107,10 @@ const AdminServices = () => {
   return (
     <div>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-        <h2 className="text-2xl font-bold">Manage Services</h2>
+        <div>
+          <h2 className="text-2xl font-bold">Manage Services</h2>
+          <span className="text-sm text-gray-500">Total: {services.length} services</span>
+        </div>
         <div className="flex items-center gap-3">
           <div className="flex bg-gray-100 rounded-lg p-1">
             <button 

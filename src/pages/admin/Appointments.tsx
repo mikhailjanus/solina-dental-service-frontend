@@ -107,9 +107,13 @@ const AdminAppointments = () => {
     );
   }
 
-  return (
+   return (
     <div>
-      <h2 className="text-2xl font-bold mb-6">Manage Appointments</h2>
+      <div>
+        <h2 className="text-2xl font-bold">Manage Appointments</h2>
+        <span className="text-sm text-gray-500">Total: {appointments.length} appointments</span>
+      </div>
+      <div className="mb-6"></div>
 
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4 text-red-700">
