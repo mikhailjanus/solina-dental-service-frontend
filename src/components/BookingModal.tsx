@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../config/api';
 import { useAuth } from '../contexts/AuthContext';
 
 interface BookingModalProps {
@@ -26,7 +27,7 @@ const BookingModal = ({ service, clinics, onClose, onSuccess }: BookingModalProp
   }, [selectedClinic, selectedDate]);
 
   const fetchAvailableSlots = async () => {
-    const res = await axios.get('http://localhost:5000/api/appointments/available-slots', {
+    const res = await axios.get(`${API_BASE_URL}/appointments/available-slots`, {
       params: { clinic_id: selectedClinic, date: selectedDate }
     });
     setAvailableSlots(res.data);
@@ -39,7 +40,7 @@ const BookingModal = ({ service, clinics, onClose, onSuccess }: BookingModalProp
     }
 
     try {
-      await axios.post('http://localhost:5000/api/appointments', {
+      await axios.post(`${API_BASE_URL}/appointments`, {
         service_id: service.id,
         clinic_id: selectedClinic,
         appointment_date: selectedDate,

@@ -1,5 +1,6 @@
  import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 
 interface User {
   id: number;
@@ -39,7 +40,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchUser = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/auth/profile');
+      const res = await axios.get(`${API_BASE_URL}/auth/profile`);
       setUser(res.data);
     } catch (error) {
       // Only clear auth if it's a 401 (unauthorized) error
@@ -55,7 +56,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const login = async (email: string, password: string) => {
-    const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+    const res = await axios.post(`${API_BASE_URL}/auth/login`, { email, password });
     localStorage.setItem('token', res.data.token);
     setToken(res.data.token);
     setUser(res.data.user);
@@ -63,7 +64,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const register = async (data: any) => {
-    const res = await axios.post('http://localhost:5000/api/auth/register', data);
+    const res = await axios.post(`${API_BASE_URL}/auth/register`, data);
     localStorage.setItem('token', res.data.token);
     setToken(res.data.token);
     setUser(res.data.user);

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 import { useAuth } from '../contexts/AuthContext';
 
 const Profile = () => {
@@ -32,7 +33,7 @@ const Profile = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.put('http://localhost:5000/api/auth/profile', {
+      await axios.put(`${API_BASE_URL}/auth/profile`, {
         firstName: formData.firstName,
         middleName: formData.middleName,
         lastName: formData.lastName,

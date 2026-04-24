@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../../config/api';
 import { Link } from 'react-router-dom';
 
 const AdminDashboard = () => {
@@ -12,12 +13,12 @@ const AdminDashboard = () => {
   }, []);
 
   const fetchStats = async () => {
-    const res = await axios.get('http://localhost:5000/api/admin/dashboard-stats');
+    const res = await axios.get(`${API_BASE_URL}/admin/dashboard-stats`);
     setStats(res.data);
   };
 
   const fetchIncome = async () => {
-    const res = await axios.get('http://localhost:5000/api/admin/summary');
+    const res = await axios.get(`${API_BASE_URL}/admin/summary`);
     setIncome(res.data);
   };
 

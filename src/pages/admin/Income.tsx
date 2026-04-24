@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../../config/api';
 
 const AdminIncome = () => {
   const [income, setIncome] = useState<any[]>([]);
@@ -11,12 +12,12 @@ const AdminIncome = () => {
   }, []);
 
   const fetchIncome = async () => {
-    const res = await axios.get('http://localhost:5000/api/admin');
+    const res = await axios.get(`${API_BASE_URL}/admin`);
     setIncome(res.data);
   };
 
   const fetchSummary = async () => {
-    const res = await axios.get('http://localhost:5000/api/admin/summary');
+    const res = await axios.get(`${API_BASE_URL}/admin/summary`);
     setSummary(res.data);
   };
 

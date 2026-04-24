@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import axios from 'axios';
 import BookingModal from '../components/BookingModal';
+import { API_BASE_URL, UPLOADS_BASE_URL } from '../config/api';
 import { CircleDot, Shield, Clock, MapPin, Phone, Calendar, Star, ChevronRight, Award, ImageOff } from 'lucide-react';
 
 interface Service {
@@ -34,12 +35,12 @@ const Home = () => {
   }, []);
 
   const fetchServices = async () => {
-    const res = await axios.get('http://localhost:5000/api/services');
+    const res = await axios.get(`${API_BASE_URL}/services`);
     setServices(res.data.filter((service: Service) => Number(service.is_active) === 1));
   };
 
   const fetchClinics = async () => {
-    const res = await axios.get('http://localhost:5000/api/clinics');
+    const res = await axios.get(`${API_BASE_URL}/clinics`);
     setClinics(res.data);
   };
 
@@ -127,17 +128,17 @@ const Home = () => {
                   >
                   {/* Service Image */}
                   <div className="relative h-48 bg-gray-100">
-                    {service.image ? (
-                       <img 
-                         src={`http://localhost:5000/uploads/services/${service.image}`} 
-                         alt={service.name}
-                         className="w-full h-full object-contain bg-gray-50"
-                         onError={(e) => {
-                           (e.target as HTMLImageElement).style.display = 'none';
-                           (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
-                         }}
-                       />
-                    ) : null}
+                     {service.image ? (
+                        <img
+                          src={`${UPLOADS_BASE_URL}/services/${service.image}`}
+                          alt={service.name}
+                          className="w-full h-full object-contain bg-gray-50"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = 'none';
+                            (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+                          }}
+                        />
+                     ) : null}
                     <div className={`${service.image ? 'hidden' : 'flex'} absolute inset-0 items-center justify-center bg-gray-200`}>
                       <ImageOff className="w-12 h-12 text-gray-400" />
                     </div>

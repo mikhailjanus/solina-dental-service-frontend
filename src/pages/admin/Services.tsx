@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../../config/api';
 
 interface Service {
   id: number;
@@ -45,20 +46,20 @@ const AdminServices = () => {
   }, [isModalOpen]);
 
    const fetchServices = async () => {
-     const res = await axios.get('http://localhost:5000/api/services');
-     setServices(res.data.map((service: Service) => ({
-       ...service,
-       is_active: Number(service.is_active) === 1 ? 1 : 0
-     })));
-   };
+      const res = await axios.get(`${API_BASE_URL}/services`);
+      setServices(res.data.map((service: Service) => ({
+        ...service,
+        is_active: Number(service.is_active) === 1 ? 1 : 0
+      })));
+    };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       if (editingService) {
-        await axios.put(`http://localhost:5000/api/services/${editingService.id}`, formData);
+        await axios.put(`${API_BASE_URL}/services/${editingService.id}`, formData);
       } else {
-        await axios.post('http://localhost:5000/api/services', formData);
+        await axios.post(`${API_BASE_URL}/services`, formData);
       }
       fetchServices();
       handleCloseModal();
@@ -81,14 +82,14 @@ const AdminServices = () => {
 
   const handleDelete = async (id: number) => {
     if (window.confirm('Are you sure you want to delete this service?')) {
-      await axios.delete(`http://localhost:5000/api/services/${id}`);
+      await axios.delete(`${API_BASE_URL}/services/${id}`);
       fetchServices();
     }
   };
 
   const handleToggleStatus = async (service: Service) => {
     try {
-      await axios.put(`http://localhost:5000/api/services/${service.id}`, {
+      await axios.put(`${API_BASE_URL}/services/${service.id}`, {
         ...service,
         is_active: Number(service.is_active) === 1 ? 0 : 1
       });

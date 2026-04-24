@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../../config/api';
 
 interface Clinic {
   id: number;
@@ -42,7 +43,7 @@ const AdminClinics = () => {
 
   const fetchClinics = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/clinics');
+      const res = await axios.get(`${API_BASE_URL}/clinics`);
       setClinics(res.data);
     } catch (error) {
       alert('Failed to fetch clinics');
@@ -53,9 +54,9 @@ const AdminClinics = () => {
     e.preventDefault();
     try {
       if (editingClinic) {
-        await axios.put(`http://localhost:5000/api/clinics/${editingClinic.id}`, formData);
+        await axios.put(`${API_BASE_URL}/clinics/${editingClinic.id}`, formData);
       } else {
-        await axios.post('http://localhost:5000/api/clinics', formData);
+        await axios.post(`${API_BASE_URL}/clinics`, formData);
       }
       fetchClinics();
       handleCloseModal();
@@ -78,7 +79,7 @@ const AdminClinics = () => {
   const handleDelete = async (id: number) => {
     if (window.confirm('Are you sure you want to delete this clinic?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/clinics/${id}`);
+        await axios.delete(`${API_BASE_URL}/clinics/${id}`);
         fetchClinics();
       } catch (error) {
         alert('Failed to delete clinic');

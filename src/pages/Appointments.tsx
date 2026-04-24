@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 import { useAuth } from '../contexts/AuthContext';
 
 const Appointments = () => {
@@ -15,7 +16,7 @@ const Appointments = () => {
 
   const fetchAppointments = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/appointments', {
+      const res = await axios.get(`${API_BASE_URL}/appointments`, {
         headers: {
           Authorization: token ? `Bearer ${token}` : ''
         }
