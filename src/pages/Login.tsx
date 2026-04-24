@@ -16,12 +16,17 @@ const Login = () => {
     setLoading(true);
 
     try {
-      await login(email, password);
-      navigate('/');
+      const result = await login(email, password);
+      // Redirect based on user role
+      if (result.user.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
     } catch (error: any) {
       setError(error.response?.data?.message || 'Login failed');
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
