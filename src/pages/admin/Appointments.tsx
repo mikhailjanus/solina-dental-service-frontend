@@ -265,7 +265,7 @@ const AdminAppointments = () => {
              {appointments.map((apt: any) => (
                <tr key={apt.id}>
                  <td className="px-6 py-4 text-sm text-gray-900">{apt.id}</td>
-                 <td className="px-6 py-4 text-sm text-gray-900">{apt.patienFirstName}</td>
+                 <td className="px-6 py-4 text-sm text-gray-900">{apt.patientFirstName}</td>
                  <td className="px-6 py-4 text-sm text-gray-900">{apt.patientMiddleName}</td>
                  <td className="px-6 py-4 text-sm text-gray-900">{apt.patientLastName}</td>
                  <td className="px-6 py-4 text-sm text-gray-900">{apt.patientAddress}</td>

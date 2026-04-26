@@ -9,7 +9,8 @@ interface Service {
   id: number;
   name: string;
   description: string;
-  price: number;
+  price_range_from: number;
+  price_range_to: number;
   duration: number;
   image?: string;
   is_active: boolean | number;
@@ -59,7 +60,7 @@ const Home = () => {
                 Your Smile Is Our Priority
               </h1>
               <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                Experience exceptional dental care with our team of expert dentists. Modern treatments, 
+                Experience exceptional dental care with our team of expert dentists. Modern treatments,
                 comfortable environment, and compassionate care for the whole family.
               </p>
               <div className="flex flex-wrap gap-4">
@@ -95,12 +96,12 @@ const Home = () => {
             </div>
             <div className="relative hidden lg:block">
               <div className="absolute -top-8 -left-8 w-72 h-72 bg-blue-100 rounded-full opacity-50 blur-3xl"></div>
-               <div className="relative bg-gradient-to-br from-blue-500 to-blue-700 rounded-3xl p-8 text-white shadow-2xl">
-                 <CircleDot className="w-20 h-20 mb-6 opacity-90" />
+              <div className="relative bg-gradient-to-br from-blue-500 to-blue-700 rounded-3xl p-8 text-white shadow-2xl">
+                <CircleDot className="w-20 h-20 mb-6 opacity-90" />
                 <h3 className="text-2xl font-bold mb-2">Premium Dental Care</h3>
                 <p className="opacity-90 mb-6">Advanced treatments with state-of-the-art technology for optimal oral health.</p>
                 <div className="flex items-center space-x-1">
-                  {[1,2,3,4,5].map(i => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}
+                  {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}
                   <span className="ml-2 font-semibold">4.9/5 Rating</span>
                 </div>
               </div>
@@ -119,54 +120,54 @@ const Home = () => {
               Comprehensive dental services ranging from routine checkups to advanced cosmetic and restorative treatments.
             </p>
           </div>
-          
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {services.map(service => (
-                  <div
-                    key={service.id}
-                    className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col"
-                  >
-                  {/* Service Image */}
-                  <div className="relative h-48 bg-gray-100">
-                     {service.image ? (
-                        <img
-                          src={`${UPLOADS_BASE_URL}/services/${service.image}`}
-                          alt={service.name}
-                          className="w-full h-full object-contain bg-gray-50"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).style.display = 'none';
-                            (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
-                          }}
-                        />
-                     ) : null}
-                    <div className={`${service.image ? 'hidden' : 'flex'} absolute inset-0 items-center justify-center bg-gray-200`}>
-                      <ImageOff className="w-12 h-12 text-gray-400" />
-                    </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {services.map(service => (
+              <div
+                key={service.id}
+                className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col"
+              >
+                {/* Service Image */}
+                <div className="relative h-48 bg-gray-100">
+                  {service.image ? (
+                    <img
+                      src={`${UPLOADS_BASE_URL}/services/${service.image}`}
+                      alt={service.name}
+                      className="w-full h-full object-contain bg-gray-50"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                        (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+                      }}
+                    />
+                  ) : null}
+                  <div className={`${service.image ? 'hidden' : 'flex'} absolute inset-0 items-center justify-center bg-gray-200`}>
+                    <ImageOff className="w-12 h-12 text-gray-400" />
                   </div>
-                  
-                  <div className="p-6 flex flex-col flex-grow">
+                </div>
+
+                <div className="p-6 flex flex-col flex-grow">
                   <h3 className="text-xl font-bold text-gray-900 mb-2">{service.name}</h3>
-                <p className="text-gray-600 mb-4 text-sm leading-relaxed">{service.description}</p>
-                <div className="mt-auto">
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="text-2xl font-bold text-blue-600">₱{service.price}</span>
-                    <span className="text-gray-500 flex items-center text-sm">
-                      <Clock className="w-4 h-4 mr-1" />
-                      {service.duration} min
-                    </span>
+                  <p className="text-gray-600 mb-4 text-sm leading-relaxed">{service.description}</p>
+                  <div className="mt-auto">
+                    <div className="flex justify-between items-center mb-4">
+                      <span className="text-2xl font-bold text-blue-600">₱{service.price_range_from} - ₱{service.price_range_to}</span>
+                      <span className="text-gray-500 flex items-center text-sm">
+                        <Clock className="w-4 h-4 mr-1" />
+                        {service.duration} min
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => { setSelectedService(service); setShowBooking(true); }}
+                      className="w-full bg-gray-50 hover:bg-blue-600 hover:text-white text-gray-800 py-3 rounded-xl font-semibold transition flex items-center justify-center"
+                    >
+                      Book Now
+                      <ChevronRight className="w-4 h-4 ml-1" />
+                    </button>
                   </div>
-                  <button
-                    onClick={() => { setSelectedService(service); setShowBooking(true); }}
-                    className="w-full bg-gray-50 hover:bg-blue-600 hover:text-white text-gray-800 py-3 rounded-xl font-semibold transition flex items-center justify-center"
-                  >
-                    Book Now
-                    <ChevronRight className="w-4 h-4 ml-1" />
-                  </button>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -233,7 +234,7 @@ const Home = () => {
                     <p className="text-gray-600">{clinic.operating_hours}</p>
                   </div>
                 </div>
-                <button 
+                <button
                   onClick={() => setShowBooking(true)}
                   className="text-blue-600 font-semibold hover:text-blue-700 flex items-center"
                 >
