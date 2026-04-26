@@ -149,6 +149,7 @@ const AdminAppointments = () => {
         appointment_date: appointment.appointment_date ? formatDateLocal(appointment.appointment_date) : '',
         appointment_time: appointment.appointment_time,
         notes: appointment.notes || '',
+        status: appointment.status || 'pending',
         total_amount: appointment.total_amount || appointment.amount
       };
       console.log('Setting editAppointment state with:', newState);
@@ -178,6 +179,7 @@ const AdminAppointments = () => {
           service_id: editAppointment.serviceId,
           appointment_date: editAppointment.appointment_date,
           appointment_time: editAppointment.appointment_time,
+          status: editAppointment.status,
           notes: editAppointment.notes,
           total_amount: editAppointment.total_amount
         },
