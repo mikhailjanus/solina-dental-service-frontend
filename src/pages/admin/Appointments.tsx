@@ -41,6 +41,31 @@ const AdminAppointments = () => {
     }
   }, [editAppointment]);
 
+  // Handle Escape key to close modals
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (showAddModal) {
+          handleCloseAddModal();
+        }
+        if (showEditModal) {
+          handleCloseEditModal();
+        }
+        if (showPatientSelectModal) {
+          setShowPatientSelectModal(false);
+        }
+      }
+    };
+
+    if (showAddModal || showEditModal || showPatientSelectModal) {
+      document.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [showAddModal, showEditModal, showPatientSelectModal]);
+
   const fetchAppointments = async () => {
     try {
       const token = localStorage.getItem('token');
