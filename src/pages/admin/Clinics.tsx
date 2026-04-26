@@ -8,6 +8,7 @@ interface Clinic {
   address: string;
   phone: string;
   operating_hours: string;
+  is_active: boolean;
 }
 
 const AdminClinics = () => {
@@ -18,7 +19,8 @@ const AdminClinics = () => {
     name: '',
     address: '',
     phone: '',
-    operating_hours: ''
+    operating_hours: '',
+    is_active: true
   });
 
   useEffect(() => {
@@ -71,7 +73,8 @@ const AdminClinics = () => {
       name: clinic.name,
       address: clinic.address,
       phone: clinic.phone,
-      operating_hours: clinic.operating_hours
+      operating_hours: clinic.operating_hours,
+      is_active: clinic.is_active
     });
     setIsModalOpen(true);
   };
@@ -94,7 +97,8 @@ const AdminClinics = () => {
       name: '',
       address: '',
       phone: '',
-      operating_hours: ''
+      operating_hours: '',
+      is_active: true
     });
   };
 
@@ -111,7 +115,8 @@ const AdminClinics = () => {
             name: '',
             address: '',
             phone: '',
-            operating_hours: ''
+            operating_hours: '',
+            is_active: true
           });
           setIsModalOpen(true);
         }} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
@@ -156,16 +161,27 @@ const AdminClinics = () => {
                   required
                 />
               </div>
-              <div>
-                <label className="block text-gray-700 mb-1">Operating Hours</label>
-                <input
-                  type="text"
-                  className="w-full border rounded p-2"
-                  value={formData.operating_hours}
-                  onChange={(e) => setFormData({ ...formData, operating_hours: e.target.value })}
-                  required
-                />
-              </div>
+               <div>
+                 <label className="block text-gray-700 mb-1">Operating Hours</label>
+                 <input
+                   type="text"
+                   className="w-full border rounded p-2"
+                   value={formData.operating_hours}
+                   onChange={(e) => setFormData({ ...formData, operating_hours: e.target.value })}
+                   required
+                 />
+               </div>
+               <div>
+                 <label className="flex items-center space-x-2">
+                   <input
+                     type="checkbox"
+                     className="w-4 h-4"
+                     checked={formData.is_active}
+                     onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
+                   />
+                   <span className="text-gray-700">Is Active</span>
+                 </label>
+               </div>
               <div className="flex space-x-3 mt-4">
                 <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Save Clinic</button>
                 <button type="button" onClick={handleCloseModal} className="border px-4 py-2 rounded hover:bg-gray-100">Cancel</button>
@@ -177,28 +193,34 @@ const AdminClinics = () => {
 
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <table className="w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Name</th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Address</th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Phone</th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Operating Hours</th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Actions</th>
-            </tr>
-          </thead>
+           <thead className="bg-gray-50">
+             <tr>
+               <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Name</th>
+               <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Address</th>
+               <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Phone</th>
+               <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Operating Hours</th>
+               <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Is Active</th>
+               <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Actions</th>
+             </tr>
+           </thead>
           <tbody className="divide-y">
-            {clinics.map(clinic => (
-              <tr key={clinic.id}>
-                <td className="px-6 py-4">{clinic.name}</td>
-                <td className="px-6 py-4">{clinic.address}</td>
-                <td className="px-6 py-4">{clinic.phone}</td>
-                <td className="px-6 py-4">{clinic.operating_hours}</td>
-                <td className="px-6 py-4 space-x-2">
-                  <button onClick={() => handleEdit(clinic)} className="text-blue-600 hover:underline">Edit</button>
-                  <button onClick={() => handleDelete(clinic.id)} className="text-red-600 hover:underline">Delete</button>
-                </td>
-              </tr>
-            ))}
+             {clinics.map(clinic => (
+               <tr key={clinic.id}>
+                 <td className="px-6 py-4">{clinic.name}</td>
+                 <td className="px-6 py-4">{clinic.address}</td>
+                 <td className="px-6 py-4">{clinic.phone}</td>
+                 <td className="px-6 py-4">{clinic.operating_hours}</td>
+                 <td className="px-6 py-4">
+                   <span className={`px-2 py-1 rounded text-xs font-medium ${clinic.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                     {clinic.is_active ? 'Active' : 'Inactive'}
+                   </span>
+                 </td>
+                 <td className="px-6 py-4 space-x-2">
+                   <button onClick={() => handleEdit(clinic)} className="text-blue-600 hover:underline">Edit</button>
+                   <button onClick={() => handleDelete(clinic.id)} className="text-red-600 hover:underline">Delete</button>
+                 </td>
+               </tr>
+             ))}
           </tbody>
         </table>
       </div>

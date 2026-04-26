@@ -22,6 +22,7 @@ interface Clinic {
   address: string;
   phone: string;
   operating_hours: string;
+  is_active: boolean | number;
 }
 
 const Home = () => {
@@ -42,7 +43,7 @@ const Home = () => {
 
   const fetchClinics = async () => {
     const res = await axios.get(`${API_BASE_URL}/clinics`);
-    setClinics(res.data);
+    setClinics(res.data.filter((clinic: any) => Number(clinic.is_active) === 1));
   };
 
   return (
