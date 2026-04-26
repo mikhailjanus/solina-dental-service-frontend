@@ -2,6 +2,14 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from '../../config/api';
 
+const formatDateLocal = (dateString: string) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 const AdminAppointments = () => {
   const [appointments, setAppointments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -138,7 +146,7 @@ const AdminAppointments = () => {
         patient_id: appointment.patient_id || '',
         clinicId: selectedClinic ? selectedClinic.id : '',
         serviceId: selectedService ? selectedService.id : '',
-        appointment_date: appointment.appointment_date ? new Date(appointment.appointment_date).toISOString().split('T')[0] : '',
+        appointment_date: appointment.appointment_date ? formatDateLocal(appointment.appointment_date) : '',
         appointment_time: appointment.appointment_time,
         notes: appointment.notes || '',
         total_amount: appointment.total_amount || appointment.amount
