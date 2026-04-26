@@ -6,7 +6,8 @@ interface Service {
   id: number;
   name: string;
   description: string;
-  price: number;
+  price_range_from: number;
+  price_range_to: number;
   duration: number;
   image?: string;
   is_active: number; // 0 or 1
@@ -17,10 +18,11 @@ const AdminServices = () => {
   const [editingService, setEditingService] = useState<Service | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive'>('all');
-  const [formData, setFormData] = useState<{name: string; description: string; price: string; duration: string; is_active: number}>({
+  const [formData, setFormData] = useState<{name: string; description: string; price_range_from: string; price_range_to: string; duration: string; is_active: number}>({
     name: '',
     description: '',
-    price: '',
+    price_range_from: '',
+    price_range_to: '',
     duration: '',
     is_active: 1
   });
@@ -73,7 +75,8 @@ const AdminServices = () => {
       setFormData({
         name: service.name,
         description: service.description,
-        price: service.price.toString(),
+        price_range_from: service.price_range_from.toString(),
+        price_range_to: service.price_range_to.toString(),
         duration: service.duration.toString(),
         is_active: Number(service.is_active) === 1 ? 1 : 0
       });
@@ -102,7 +105,7 @@ const AdminServices = () => {
   const handleCloseModal = () => {
     setEditingService(null);
     setIsModalOpen(false);
-    setFormData({ name: '', description: '', price: '', duration: '', is_active: 1 });
+    setFormData({ name: '', description: '', price_range_from: '', price_range_to: '', duration: '', is_active: 1 });
   };
 
   return (
@@ -135,7 +138,7 @@ const AdminServices = () => {
           </div>
           <button onClick={() => {
             setEditingService(null);
-            setFormData({ name: '', description: '', price: '', duration: '', is_active: 1 });
+            setFormData({ name: '', description: '', price_range_from: '', price_range_to: '', duration: '', is_active: 1 });
             setIsModalOpen(true);
           }} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
             Add New Service
@@ -163,15 +166,29 @@ const AdminServices = () => {
                </div>
                <div className="grid gap-4">
                  <div>
-                   <label className="block text-gray-700 mb-1">Price ($)</label>
+                   <label className="block text-gray-700 mb-1">Price Range From (₱ )</label>
                    <div className="flex items-center">
-                     <span className="mr-2">$</span>
+                     <span className="mr-2">₱ </span>
                      <input
                        type="number"
                        step="0.01"
                        className="w-full border rounded p-2"
-                       value={formData.price}
-                       onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                       value={formData.price_range_from}
+                       onChange={(e) => setFormData({ ...formData, price_range_from: e.target.value })}
+                       required
+                     />
+                   </div>
+                 </div>
+                  <div>
+                   <label className="block text-gray-700 mb-1">Price Range To (₱ )</label>
+                   <div className="flex items-center">
+                     <span className="mr-2">₱ </span>
+                     <input
+                       type="number"
+                       step="0.01"
+                       className="w-full border rounded p-2"
+                       value={formData.price_range_to}
+                       onChange={(e) => setFormData({ ...formData, price_range_to: e.target.value })}
                        required
                      />
                    </div>
@@ -222,7 +239,7 @@ const AdminServices = () => {
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Name</th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Price</th>
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Price Range</th>
               <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Duration</th>
               <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Status</th>
               <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Actions</th>
@@ -249,7 +266,9 @@ const AdminServices = () => {
              return filteredServices.map(service => (
                <tr key={service.id}>
                  <td className="px-6 py-4">{service.name}</td>
-                 <td className="px-6 py-4">${service.price}</td>
+                  <td className="px-6 py-4">
+                    ₱{service.price_range_from} - ₱{service.price_range_to}
+                  </td>
                  <td className="px-6 py-4">{service.duration} min</td>
                  <td className="px-6 py-4">
                   <span className={`px-2 py-1 rounded text-xs ${Number(service.is_active) === 1 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
