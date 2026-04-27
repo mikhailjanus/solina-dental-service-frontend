@@ -34,35 +34,44 @@ const AdminDashboard = () => {
          </div>
        </div>
 
-      <div className="grid md:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-gray-500 text-sm">Total Appointments</h3>
-          <p className="text-3xl font-bold text-blue-600">{stats.totalAppointments || 0}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-gray-500 text-sm">Pending Appointments</h3>
-          <p className="text-3xl font-bold text-yellow-600">{stats.pendingAppointments || 0}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-gray-500 text-sm">Total Patients</h3>
-          <p className="text-3xl font-bold text-green-600">{stats.totalPatients || 0}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-gray-500 text-sm">Total Income</h3>
-          <p className="text-3xl font-bold text-purple-600">${income.total || 0}</p>
-        </div>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold mb-4">Today's Income</h3>
-          <p className="text-4xl font-bold text-green-600">${income.today || 0}</p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold mb-4">Active Services</h3>
-          <p className="text-4xl font-bold text-blue-600">{stats.totalServices || 0}</p>
-        </div>
-      </div>
+       <div className="grid md:grid-cols-6 gap-6 mb-8">
+         <div className="bg-white rounded-lg shadow p-6">
+           <h3 className="text-gray-500 text-sm">Total Appointments</h3>
+           <p className="text-3xl font-bold text-blue-600">{stats.totalAppointments || 0}</p>
+         </div>
+         <div className="bg-white rounded-lg shadow p-6">
+           <h3 className="text-gray-500 text-sm">Pending</h3>
+           <p className="text-3xl font-bold text-yellow-600">{stats.pendingAppointments || 0}</p>
+         </div>
+         <div className="bg-white rounded-lg shadow p-6">
+           <h3 className="text-gray-500 text-sm">Confirmed</h3>
+           <p className="text-3xl font-bold text-blue-500">{stats.confirmedAppointments || 0}</p>
+         </div>
+         <div className="bg-white rounded-lg shadow p-6">
+           <h3 className="text-gray-500 text-sm">Completed</h3>
+           <p className="text-3xl font-bold text-green-600">{stats.completedAppointments || 0}</p>
+         </div>
+         <div className="bg-white rounded-lg shadow p-6">
+           <h3 className="text-gray-500 text-sm">Cancelled</h3>
+           <p className="text-3xl font-bold text-red-600">{stats.cancelledAppointments || 0}</p>
+         </div>
+         <div className="bg-white rounded-lg shadow p-6">
+           <h3 className="text-gray-500 text-sm">Total Patients</h3>
+           <p className="text-3xl font-bold text-green-600">{stats.totalPatients || 0}</p>
+         </div>
+         <div className="bg-white rounded-lg shadow p-6 md:col-span-3">
+           <h3 className="text-gray-500 text-sm">Total Income</h3>
+           <p className="text-3xl font-bold text-purple-600">${income.total || 0}</p>
+         </div>
+         <div className="bg-white rounded-lg shadow p-6 md:col-span-3">
+           <h3 className="text-gray-500 text-sm">Today's Income</h3>
+           <p className="text-4xl font-bold text-green-600">${income.today || 0}</p>
+         </div>
+         <div className="bg-white rounded-lg shadow p-6 md:col-span-3">
+           <h3 className="text-gray-500 text-sm">Active Services</h3>
+           <p className="text-4xl font-bold text-blue-600">{stats.totalServices || 0}</p>
+         </div>
+       </div>
     </div>
   );
 };
